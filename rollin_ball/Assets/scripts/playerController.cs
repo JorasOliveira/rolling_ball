@@ -9,12 +9,11 @@ public class playerController : MonoBehaviour
     // Create public variables for player speed, and for the Text UI game objects
 	public TextMeshProUGUI countText;
 	public GameObject winTextObject;
-    private float movementX;
-    private float movementY;
-	private int count;
+    private int count;
     public float intensity = 7.0f;
     public Rigidbody rb;
-    public string currentSceneName;
+    public float fallThreshold = 1.0f; // Adjust this threshold as needed
+
     // Start is called before the first frame update
 	void Start ()
 	{
@@ -34,6 +33,12 @@ public class playerController : MonoBehaviour
     {
 
         rb.AddForce(intensity * Input.GetAxis("Horizontal"), 0, intensity * Input.GetAxis("Vertical"));
+        // Check if the Y-velocity is below the threshold (falling)
+        if (rb.velocity.y < -fallThreshold)
+        {
+            SceneManager.LoadScene(1);
+        }
+
         
     }
 
